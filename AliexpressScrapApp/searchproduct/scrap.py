@@ -6,7 +6,7 @@ import pandas as pd
 import os
 import time
 import sys
-sys.path.insert(1, './AliexpressScrap')
+sys.path.insert(1, './AliexpressScrapApp')
 from spider import spider
 from create_excel import *
 
@@ -104,10 +104,7 @@ class Aliexpress:
             for brand in data["specsModule"]['props']:
                 if brand['attrName'] == "ชื่อยี่ห้อ":
                     dataDetail["brand"] = brand["attrValue"]
-                else:
-                    pass
-        except:
-            dataDetail["brand"] = None
+
 
         propertyName = []
         propertyValueDisplayName = []
@@ -175,7 +172,7 @@ class Aliexpress:
         # create sub category
         self.CreateFolder(directory, self.slash + self.productId["ENcategoryName"])
         count = 0
-        for productID in self.productId["productId"]:
+        for productID in self.productId["productId"][0:5]:
             path_complete = directory, self.slash + self.productId["ENcategoryName"]+ self.slash + str(productID)
             path_complete = ''.join(path_complete)
 
