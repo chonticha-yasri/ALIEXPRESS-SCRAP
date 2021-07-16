@@ -89,7 +89,8 @@ class Aliexpress:
         "productID" : data["pageModule"]["itemDetailUrl"].split("/")[-1].split(".")[0],
         "title" : data["titleModule"]["subject"],
         "productUrl" : data["pageModule"]["itemDetailUrl"],
-        "max_price" : data["priceModule"]["formatedPrice"]
+        "max_price" : data["priceModule"]["formatedPrice"],
+        "brand" : " "
         }
 
         try:
@@ -104,6 +105,8 @@ class Aliexpress:
             for brand in data["specsModule"]['props']:
                 if brand['attrName'] == "ชื่อยี่ห้อ":
                     dataDetail["brand"] = brand["attrValue"]
+        except:
+            dataDetail["brand"] = " "
 
 
         propertyName = []
@@ -132,7 +135,7 @@ class Aliexpress:
         image_name = []
         for link_im in list_im:
             try:
-                if dataDetail["brand"] is not None:
+                if dataDetail["brand"] != " ":
                     name_im = f'{dataDetail["brand"]}_{dataDetail["productID"]}_{i:03}.jpg'
                     self.download_image(link_im, path_complete, name_im)
                     image_name.append(name_im)
@@ -172,7 +175,7 @@ class Aliexpress:
         # create sub category
         self.CreateFolder(directory, self.slash + self.productId["ENcategoryName"])
         count = 0
-        for productID in self.productId["productId"][0:5]:
+        for productID in self.productId["productId"]:
             path_complete = directory, self.slash + self.productId["ENcategoryName"]+ self.slash + str(productID)
             path_complete = ''.join(path_complete)
 
