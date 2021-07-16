@@ -23,6 +23,7 @@ class Aliexpress:
         header = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
 
         url = f"https://th.aliexpress.com/item/{productId}.html"
+        data = None
         try:
             r = requests.get(url, headers = header,timeout=10)
             match = re.search(r'data: ({.+})', r.text).group(1)
@@ -34,8 +35,6 @@ class Aliexpress:
                 data = json.loads(match)
             except:
                 pass
-        # match = re.search(r'data: ({.+})', r.text).group(1)
-        # data = json.loads(match)
         return data
 
     def Mainfolder(self):
@@ -186,7 +185,10 @@ class Aliexpress:
             print(path_complete)
 
             data = self.request(productID)
-            self.productDetail(data,path_complete,count,path_complete_excel)
-            count+=1
+            if data is not None:
+                self.productDetail(data,path_complete,count,path_complete_excel)
+                count+=1
+            else:
+                pass
 
 
