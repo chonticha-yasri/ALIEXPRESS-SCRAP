@@ -175,17 +175,16 @@ class Aliexpress:
         self.CreateFolder(directory, self.slash + self.productId["categoryName"])
         count = 0
         for productID in self.productId["productId"]:
-            path_complete = directory, self.slash + self.productId["categoryName"]+ self.slash + str(productID)
-            path_complete = ''.join(path_complete)
-
-            path_complete_excel = self.productId["categoryName"]+ self.slash + str(productID)
-            path_complete_excel = ''.join(path_complete_excel)
-
-            self.CreateFolder(path_complete,"")
-            print(path_complete)
-
             data = self.request(productID)
             if data is not None:
+                path_complete = directory, self.slash + self.productId["categoryName"]+ self.slash + str(productID)
+                path_complete = ''.join(path_complete)
+
+                path_complete_excel = self.productId["categoryName"]+ self.slash + str(productID)
+                path_complete_excel = ''.join(path_complete_excel)
+
+                self.CreateFolder(path_complete,"")
+                print(path_complete)
                 self.productDetail(data,path_complete,count,path_complete_excel)
                 count+=1
             else:
